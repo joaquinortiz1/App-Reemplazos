@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}  {% endblock%}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg bg-info">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Universidad</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Acerca de</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contactos</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        {% block body %}
+
+        {% endblock %}
+    </div>
+    <form action="procesar_formulario.php" method="POST">
+        <label for="titulo">Título del Trabajo:</label>
+        <input type="text" id="titulo" name="titulo" required><br>
+
+        <label for="descripcion">Descripción del Trabajo:</label>
+        <textarea id="descripcion" name="descripcion" rows="4" required></textarea><br>
+
+        <label for="requisitos">Requisitos del Trabajo:</label>
+        <textarea id="requisitos" name="requisitos" rows="4" required></textarea><br>
+
+        <label for="ubicacion">Ubicación del Trabajo:</label>
+        <input type="text" id="ubicacion" name="ubicacion" required><br>
+
+        <label for="sueldo">Sueldo:</label>
+        <input type="number" id="sueldo" name="sueldo" required><br>
+
+        <label for="tipo_trabajo">Tipo de Trabajo:</label>
+        <select id="tipo_trabajo" name="tipo_trabajo" required>
+            <option value="tiempo_completo">Tiempo Completo</option>
+            <option value="medio_tiempo">Medio Tiempo</option>
+            <option value="freelance">Freelance</option>
+        </select><br>
+
+        <label for="tipo_contrato">Tipo de Contrato:</label>
+        <select id="tipo_contrato" name="tipo_contrato" required>
+            <option value="indefinido">Indefinido</option>
+            <option value="temporal">Temporal</option>
+        </select><br>
+
+        <label for="area_trabajo">Área de Trabajo:</label>
+        <input type="text" id="area_trabajo" name="area_trabajo" required><br>
+
+        <label for="fecha_publicacion">Fecha de Publicación:</label>
+        <input type="date" id="fecha_publicacion" name="fecha_publicacion" required><br>
+
+        <label for="trabajo_remoto">Trabajo Remoto:</label>
+        <input type="checkbox" id="trabajo_remoto" name="trabajo_remoto"><br>
+
+        <label for="fecha_limite">Fecha Límite para la Aplicación:</label>
+        <input type="date" id="fecha_limite" name="fecha_limite" required><br>
+
+        <input type="submit" value="Enviar">
+    </form>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+</body>
+</html>
+

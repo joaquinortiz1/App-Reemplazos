@@ -20,6 +20,10 @@ class SolicitudDeTrabajo(models.Model):
     tipo_de_contrato = models.CharField(max_length=20, choices=[("Indefinido", "Indefinido"), ("Temporal", "Temporal"), ("Freelance", "Freelance")])
     area_de_trabajo = models.CharField(max_length=50)
     fecha_de_publicacion = models.DateField(auto_now_add=True)
-    especialidades_buscadas = models.ManyToManyField("Especialidad")
+    #especialidades_buscadas = models.ManyToManyField("Especialidad")
     trabajo_remoto = models.BooleanField()
     fecha_limite = models.DateField()
+
+    def __str__(self):
+        texto  = "{0} {1}"
+        return texto.format(self.titulo, self.requisitos)
