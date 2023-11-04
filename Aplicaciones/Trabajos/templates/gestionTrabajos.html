@@ -11,7 +11,7 @@
             <div class="card-body">
                 <form action="/registrarTrabajo/" method="POST">{% csrf_token %}
                     <div class="form-group">
-
+                        <label for="descripcion">Titulo del Trabajo:</label>
                         <input type="text" id="txtTitulo" name="txtTitulo" class="form-control" placeholder="Titulo" maxlength="50" required>
                     </div>
 
@@ -90,8 +90,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <td>{{c.titulo}}</td>
-                    <td>{{c.requisitos}}</td>
+                    {% for t in trabajos %}
+                    <tr>
+                        
+                        <td>{{t.titulo}}</td>
+                        <td>{{t.requisitos}}</td>
+                        
+                    </tr>
+                    {% endfor %}
                 </tbody>
             </table>
         </div>

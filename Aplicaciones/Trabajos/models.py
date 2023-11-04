@@ -1,13 +1,13 @@
 from django.db import models
 
 # Create your models here.
-class Especialidad(models.Model):
+#class Especialidad(models.Model):
     # Definición de campos de la especialidad
-    nombre = models.CharField(max_length=255)
+    #nombre = models.CharField(max_length=255)
     # Otros campos
 
-    def __str__(self):
-        return self.nombre
+    #def __str__(self):
+        #return self.nombre
 
 
 class SolicitudDeTrabajo(models.Model):
