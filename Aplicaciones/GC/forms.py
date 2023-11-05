@@ -9,6 +9,8 @@ class UsuarioForm(forms.ModelForm):
             'nombre',
             'apellidos',
             'email',
+            'contrasena',
+            'rut',
             'fecha_nacimiento',
             'roles',
         ]
