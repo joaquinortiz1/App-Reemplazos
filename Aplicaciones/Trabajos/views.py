@@ -10,6 +10,7 @@ def form(request):
 
 #@csrf_exempt
 def registrarTrabajo(request):
+    id=request.POST['txtid']
     titulo=request.POST['txtTitulo']
     descripcion=request.POST['txtDescripcion']
     requisitos=request.POST['txtRequisitos']
@@ -19,8 +20,9 @@ def registrarTrabajo(request):
     tipo_de_contrato=request.POST['selTipoContrato']
     area_de_trabajo=request.POST['txtAreaTrabajo']
     fecha_de_publicacion=request.POST['fecha_publicacion']
-    trabajo_remoto=request.POST['chkTrabajoRemoto']
+    #trabajo_remoto=request.POST['chkTrabajoRemoto']
+    trabajo_remoto = request.POST.get('chkTrabajoRemoto', None)
     fecha_limite=request.POST['fecha_limite']
 
-    nuevo_trabajo = SolicitudDeTrabajo.objects.create(titulo=titulo, descripcion=descripcion, requisitos=requisitos, ubicacion=ubicacion, sueldo=sueldo, tipo_de_trabajo=tipo_de_trabajo, tipo_de_contrato=tipo_de_contrato, area_de_trabajo=area_de_trabajo, fecha_de_publicacion=fecha_de_publicacion, trabajo_remoto=trabajo_remoto, fecha_limite=fecha_limite)
-    return redirect('solicitudes/')
+    nuevo_trabajo = SolicitudDeTrabajo.objects.create(id=id, titulo=titulo, descripcion=descripcion, requisitos=requisitos, ubicacion=ubicacion, sueldo=sueldo, tipo_de_trabajo=tipo_de_trabajo, tipo_de_contrato=tipo_de_contrato, area_de_trabajo=area_de_trabajo, fecha_de_publicacion=fecha_de_publicacion, trabajo_remoto=trabajo_remoto, fecha_limite=fecha_limite)
+    return redirect('/')

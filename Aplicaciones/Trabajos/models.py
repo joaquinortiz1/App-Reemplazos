@@ -1,16 +1,8 @@
 from django.db import models
 
-# Create your models here.
-#class Especialidad(models.Model):
-    # Definición de campos de la especialidad
-    #nombre = models.CharField(max_length=255)
-    # Otros campos
-
-    #def __str__(self):
-        #return self.nombre
-
 
 class SolicitudDeTrabajo(models.Model):
+    id = models.CharField(max_length=10, primary_key=True)
     titulo = models.CharField(max_length=100)
     descripcion = models.TextField()
     requisitos = models.TextField()
@@ -20,10 +12,12 @@ class SolicitudDeTrabajo(models.Model):
     tipo_de_contrato = models.CharField(max_length=20, choices=[("Indefinido", "Indefinido"), ("Temporal", "Temporal"), ("Freelance", "Freelance")])
     area_de_trabajo = models.CharField(max_length=50)
     fecha_de_publicacion = models.DateField(auto_now_add=True)
-    #especialidades_buscadas = models.ManyToManyField("Especialidad")
     trabajo_remoto = models.BooleanField()
     fecha_limite = models.DateField()
 
     def __str__(self):
         texto  = "{0} {1}"
         return texto.format(self.titulo, self.requisitos)
+    
+# Asignar el valor '0000' al campo 'codigo' de todos los registros de 'solicituddetrabajo'
+#SolicitudDeTrabajo.objects.all().update(codigo='0000')
