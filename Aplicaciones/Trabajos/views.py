@@ -10,7 +10,6 @@ def form(request):
 
 #@csrf_exempt
 def registrarTrabajo(request):
-    id=request.POST['txtid']
     titulo=request.POST['txtTitulo']
     descripcion=request.POST['txtDescripcion']
     requisitos=request.POST['txtRequisitos']
