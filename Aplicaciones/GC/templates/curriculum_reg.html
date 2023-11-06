@@ -1,0 +1,15 @@
+
+
+{% block content %}
+  <h2>Registrar Currículum</h2>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% for field in form %}
+      <div class="field">
+        {{ field.label_tag }} {{ field }}
+      </div>
+    {% endfor %}
+    <button type="submit">Guardar Currículum</button>
+  </form>
+{% endblock %}
+

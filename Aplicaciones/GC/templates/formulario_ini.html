@@ -1,0 +1,9 @@
+<!-- En formulario_inicio_sesion.html -->
+<form method="post">
+    {% csrf_token %}
+    {{ form.nombre_usuario.label_tag }}
+    {{ form.nombre_usuario }}
+    {{ form.contrasena.label_tag }}
+    {{ form.contrasena }}
+    <input type="submit" value="Iniciar Sesión">
+</form>

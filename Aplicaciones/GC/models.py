@@ -26,7 +26,7 @@ class Usuario(models.Model):
 
     # Campos importantes
     contrasena = models.CharField(max_length=128, default='valor_predeterminado')
-    rut = models.CharField(max_length=12, unique=True)
+    rut = models.CharField(max_length=12, unique=True, default='N/A')
 
     # Campos de fechas
     fecha_nacimiento = models.DateField(null=False, default="2000-01-01")
@@ -43,18 +43,20 @@ class Usuario(models.Model):
     ]
     roles = models.CharField(max_length=7, choices=OPCIONES_ROL, default='usuario')
 
-class UsuarioManager(BaseUserManager):
-    def create_user(self, nombre_usuario, email, contrasena=None, **extra_fields):
-        if not email:
-            raise ValueError('El campo de correo electrónico es obligatorio')
-        email = self.normalize_email(email)
-        user = self.model(nombre_usuario=nombre_usuario, email=email, **extra_fields)
-        user.set_password(contrasena)
-        user.save(using=self._db)
-        return user
 
-    def create_superuser(self, nombre_usuario, email, contrasena, **extra_fields):
-        extra_fields.setdefault('es_personal', True)
-        extra_fields.setdefault('is_staff', True)
-        return self.create_user(nombre_usuario, email, contrasena, **extra_fields)
+class Curriculum(models.Model):
+    nombre = models.CharField(max_length=100)
+    correo_electronico = models.EmailField()
+    area_trabajo = models.CharField(max_length=100)
+    telefono = models.CharField(max_length=20)
+    experiencia_laboral = models.TextField()
+    anios_experiencia = models.PositiveIntegerField()
+    educacion = models.TextField()
+    habilidades = models.TextField()
+    idiomas = models.TextField()
+    curriculum_adjunto = models.FileField(upload_to='curriculums/')
+
+    #def __str__(self):
+        #return self.nombre
+
     

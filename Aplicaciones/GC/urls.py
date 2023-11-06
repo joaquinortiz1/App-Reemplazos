@@ -5,5 +5,8 @@ urlpatterns = [
     path('', views.home),
     path('formulario_reg/', views.formulario),
     path('vista_admin/', views.vista_admin, name='vista_admin'),  
-    path('vista_usuario/', views.vista_usuario, name='vista_usuario'),  
+    path('vista_usuario/', views.vista_usuario, name='vista_usuario'),
+    path('iniciar_sesion/', views.iniciar_sesion, name='iniciar_sesion'), 
+    path('curriculum_reg/', views.registrar_curriculum, name='registrar_curriculum'), 
+    path('curriculum_edit/<int:curriculum_id>/', views.editar_curriculum, name='editar_curriculum'),
 ]
