@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Curriculum
+#from .models import Curriculum
 from . forms import UsuarioForm, LoginForm, CurriculumForm, CurriculumEditForm
 from django.contrib.auth import authenticate, login
 
@@ -64,32 +64,53 @@ def iniciar_sesion(request):
 
     #return render(request, 'curriculum_reg.html', {'form': form})
 
+#def registrar_curriculum(request):
+    #if request.method == 'POST':
+        #form = CurriculumForm(request.POST, request.FILES)
+        #if form.is_valid():
+            # Crear una instancia del modelo Curriculum y asignar los datos del formulario
+            #curriculum = Curriculum(
+                #nombre=form.cleaned_data['nombre'],
+                #correo_electronico=form.cleaned_data['correo_electronico'],
+                #area_trabajo=form.cleaned_data['area_trabajo'],
+                #telefono=form.cleaned_data['telefono'],
+                #experiencia_laboral=form.cleaned_data['experiencia_laboral'],
+                #anos_experiencia=form.cleaned_data['anos_experiencia'],
+                #educacion=form.cleaned_data['educacion'],
+                #habilidades=form.cleaned_data['habilidades'],
+                #idiomas=form.cleaned_data['idiomas'],
+            #)
+
+            # Guardar el currículum en la base de datos
+            #curriculum.save()
+
+            # Redirigir a una página de confirmación o a donde desees
+            #return redirect('vista_curriculum')  # Reemplaza 'pagina_confirmacion' con la URL correcta
+    #else:
+        #form = CurriculumForm()
+
+    #return render(request, 'curriculum_reg.html', {'form': form})
+
+
 def registrar_curriculum(request):
     if request.method == 'POST':
         form = CurriculumForm(request.POST, request.FILES)
         if form.is_valid():
-            # Crear una instancia del modelo Curriculum y asignar los datos del formulario
-            curriculum = Curriculum(
-                nombre=form.cleaned_data['nombre'],
-                correo_electronico=form.cleaned_data['correo_electronico'],
-                area_trabajo=form.cleaned_data['area_trabajo'],
-                telefono=form.cleaned_data['telefono'],
-                experiencia_laboral=form.cleaned_data['experiencia_laboral'],
-                anos_experiencia=form.cleaned_data['anos_experiencia'],
-                educacion=form.cleaned_data['educacion'],
-                habilidades=form.cleaned_data['habilidades'],
-                idiomas=form.cleaned_data['idiomas'],
-            )
-
-            # Guardar el currículum en la base de datos
-            curriculum.save()
+            # Guarda el currículum en la base de datos
+            curriculum = form.save()
 
             # Redirigir a una página de confirmación o a donde desees
-            return redirect('index.html')  # Reemplaza 'pagina_confirmacion' con la URL correcta
+            return redirect('vista_curriculum')  # Reemplaza 'vista_curriculum' con la URL correcta
     else:
         form = CurriculumForm()
 
     return render(request, 'curriculum_reg.html', {'form': form})
+
+
+def vista_curriculum(request):
+    # Lógica para la vista de curriculum
+    return render(request, 'index.html')
+
 
 def editar_curriculum(request, curriculum_id):
     curriculum = curriculum.objects.get(id=curriculum_id)
@@ -103,3 +124,4 @@ def editar_curriculum(request, curriculum_id):
         form = CurriculumEditForm(instance=curriculum)
 
     return render(request, 'editar_curriculum.html', {'form': form, 'curriculum': curriculum})
+

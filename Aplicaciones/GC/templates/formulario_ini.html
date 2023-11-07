@@ -1,5 +1,5 @@
 <!-- En formulario_inicio_sesion.html -->
-<form method="post">
+<form method="POST">
     {% csrf_token %}
     {{ form.nombre_usuario.label_tag }}
     {{ form.nombre_usuario }}

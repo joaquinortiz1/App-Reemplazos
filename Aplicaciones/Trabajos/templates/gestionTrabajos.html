@@ -1,12 +1,12 @@
 {% extends "./base.html" %}
 
-{% block title %}Gestion de trabajos{% endblock%}
+{% block title %}Solicitud de trabajos{% endblock%}
 
 {% block body %}
 
 <div class="row">
     <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
-        <h2>Gestion de Trabajos</h2>
+        <h2>Solicitud de Trabajos</h2>
         <div class="card">
             <div class="card-body">
                 <form action="/registrarTrabajo/" method="POST">{% csrf_token %}

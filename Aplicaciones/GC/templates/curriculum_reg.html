@@ -1,15 +1,55 @@
-
-
-{% block content %}
-  <h2>Registrar Currículum</h2>
-  <form method="post" enctype="multipart/form-data">
+<form method="POST">
     {% csrf_token %}
-    {% for field in form %}
-      <div class="field">
-        {{ field.label_tag }} {{ field }}
-      </div>
-    {% endfor %}
-    <button type="submit">Guardar Currículum</button>
-  </form>
-{% endblock %}
+    <div class="form-group">
+        <label for="nombre">Nombre:</label>
+        <input type="text" class="form-control" name="nombre" required>
+    </div>
+
+    <div class="form-group">
+        <label for="correo_electronico">Correo Electrónico:</label>
+        <input type="email" class="form-control" name="correo_electronico" required>
+    </div>
+
+    <div class="form-group">
+        <label for="area_trabajo">Área de Trabajo:</label>
+        <input type="text" class="form-control" name="area_trabajo" required>
+    </div>
+
+    <div class="form-group">
+        <label for="telefono">Teléfono:</label>
+        <input type="text" class="form-control" name="telefono" required>
+    </div>
+
+    <div class="form-group">
+        <label for="experiencia_laboral">Experiencia Laboral:</label>
+        <textarea class="form-control" name="experiencia_laboral" required></textarea>
+    </div>
+
+    <div class="form-group">
+        <label for="anos_experiencia">Años de Experiencia:</label>
+        <input type="number" class="form-control" name="anos_experiencia" required>
+    </div>
+
+    <div class="form-group">
+        <label for="educacion">Educación:</label>
+        <textarea class="form-control" name="educacion" required></textarea>
+    </div>
+
+    <div class="form-group">
+        <label for="habilidades">Habilidades:</label>
+        <textarea class="form-control" name="habilidades" required></textarea>
+    </div>
+
+    <div class="form-group">
+        <label for="idiomas">Idiomas:</label>
+        <textarea class="form-control" name="idiomas" required></textarea>
+    </div>
+
+    <div class="form-group">
+        <label for="curriculum_adjunto">Adjuntar Currículum:</label>
+        <input type="file" class="form-control-file" name="curriculum_adjunto" required>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Guardar Currículum</button>
+</form>
 

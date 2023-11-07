@@ -9,4 +9,5 @@ urlpatterns = [
     path('iniciar_sesion/', views.iniciar_sesion, name='iniciar_sesion'), 
     path('curriculum_reg/', views.registrar_curriculum, name='registrar_curriculum'), 
     path('curriculum_edit/<int:curriculum_id>/', views.editar_curriculum, name='editar_curriculum'),
+    path('vista_curriculum/', views.vista_curriculum, name='vista_curriculum'),
 ]
