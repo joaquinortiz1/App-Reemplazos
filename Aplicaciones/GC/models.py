@@ -46,7 +46,7 @@ class Usuario(models.Model):
 
 class Curriculum(models.Model):
     nombre = models.CharField(max_length=100)
-    correo_electronico = models.EmailField()
+    correo_electronico = models.EmailField(unique=True)
     area_trabajo = models.CharField(max_length=100)
     telefono = models.CharField(max_length=20)
     experiencia_laboral = models.TextField()
@@ -76,3 +76,15 @@ class SolicitudDeReemplazo(models.Model):
     def __str__(self):
         texto  = "{0} {1}"
         return texto.format(self.titulo, self.requisitos)
+
+
+class Cv(models.Model):
+    nombre = models.CharField(max_length=100)
+    correo_electronico = models.EmailField(unique=True)
+    area_trabajo = models.CharField(max_length=100)
+    telefono = models.CharField(max_length=20)
+    experiencia_laboral = models.TextField()
+    anios_experiencia = models.PositiveIntegerField()
+    educacion = models.TextField()
+    habilidades = models.TextField()
+    idiomas = models.TextField()

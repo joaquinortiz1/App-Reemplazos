@@ -1,98 +1,62 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Formulario de Currículum</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
+<div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+    <div>
+        <h2 style="text-align: center;">Formulario de Curriculum</h2>
+        <div class="card">
+            <div class="card-body">
+                <form action="{% url 'registro_curriculum' %}" method="POST">
+                    {% csrf_token %}
 
-        .form-group {
-            margin-bottom: 20px;
-        }
+                    <div class="form-group">
+                        <label for="nombre">Nombre:</label>
+                        <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Nombre" required>
+                    </div>
 
-        .form-control {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
+                    <div class="form-group">
+                        <label for="correo_electronico">Correo Electrónico:</label>
+                        <input type="email" id="correo_electronico" name="correo_electronico" class="form-control" placeholder="Correo Electrónico" required>
+                    </div>
 
-        label {
-            font-weight: bold;
-        }
+                    <div class="form-group">
+                        <label for="area_trabajo">Área de Trabajo:</label>
+                        <input type="text" id="area_trabajo" name="area_trabajo" class="form-control" placeholder="Área de Trabajo" required>
+                    </div>
 
-        .btn-primary {
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
-            cursor: pointer;
-        }
+                    <div class="form-group">
+                        <label for="telefono">Teléfono:</label>
+                        <input type="tel" id="telefono" name="telefono" class="form-control" placeholder="Teléfono">
+                    </div>
 
-        .btn-primary:hover {
-            background-color: #0056b3;
-        }
-    </style>
-</head>
-<body>
-    <form method="POST">
-        {% csrf_token %}
-        <div class="form-group">
-            <label for="nombre">Nombre:</label>
-            <input type="text" class="form-control" name="nombre" required>
+                    <div class="form-group">
+                        <label for="experiencia_laboral">Experiencia Laboral:</label>
+                        <textarea id="experiencia_laboral" name="experiencia_laboral" class="form-control" placeholder="Experiencia Laboral" rows="4" maxlength="500"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="anios_experiencia">Años de Experiencia:</label>
+                        <input type="number" id="anios_experiencia" name="anios_experiencia" class="form-control" placeholder="Años de Experiencia">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="educacion">Educación:</label>
+                        <textarea id="educacion" name="educacion" class="form-control" placeholder="Educación" rows="4" maxlength="500"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="habilidades">Habilidades:</label>
+                        <input type="text" id="habilidades" name="habilidades" class="form-control" placeholder="Habilidades">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="idiomas">Idiomas:</label>
+                        <input type="text" id="idiomas" name="idiomas" class="form-control" placeholder="Idiomas">
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success btn-block text-white">Enviar</button>
+                    </div>
+                </form>
+            </div>
         </div>
-
-        <div class="form-group">
-            <label for="correo_electronico">Correo Electrónico:</label>
-            <input type="email" class="form-control" name="correo_electronico" required>
-        </div>
-
-        <div class="form-group">
-            <label for="area_trabajo">Área de Trabajo:</label>
-            <input type="text" class="form-control" name="area_trabajo" required>
-        </div>
-
-        <div class="form-group">
-            <label for="telefono">Teléfono:</label>
-            <input type="text" class="form-control" name="telefono" required>
-        </div>
-
-        <div class="form-group">
-            <label for="experiencia_laboral">Experiencia Laboral:</label>
-            <textarea class="form-control" name="experiencia_laboral" required></textarea>
-        </div>
-
-        <div class="form-group">
-            <label for="anos_experiencia">Años de Experiencia:</label>
-            <input type="number" class="form-control" name="anos_experiencia" required>
-        </div>
-
-        <div class="form-group">
-            <label for="educacion">Educación:</label>
-            <textarea class="form-control" name="educacion" required></textarea>
-        </div>
-
-        <div class="form-group">
-            <label for="habilidades">Habilidades:</label>
-            <textarea class="form-control" name="habilidades" required></textarea>
-        </div>
-
-        <div class="form-group">
-            <label for="idiomas">Idiomas:</label>
-            <textarea class="form-control" name="idiomas" required></textarea>
-        </div>
-
-        <div class="form-group">
-            <label for="curriculum_adjunto">Adjuntar Currículum:</label>
-            <input type="file" class="form-control-file" name="curriculum_adjunto" required>
-        </div>
-
-        <button type="submit" class="btn btn-primary">Guardar Currículum</button>
-    </form>
-</body>
-</html>
-
+    </div>
+</div>
 

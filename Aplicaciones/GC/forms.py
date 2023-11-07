@@ -1,5 +1,5 @@
 from django import forms
-from . models import Usuario, Curriculum
+from . models import Usuario, Curriculum, Cv
 
 class UsuarioForm(forms.ModelForm):
     class Meta:
@@ -19,9 +19,9 @@ class LoginForm(forms.Form):
     nombre_usuario = forms.CharField(label='Nombre de Usuario')
     contrasena = forms.CharField(label='Contraseña', widget=forms.PasswordInput)
 
-class CurriculumForm(forms.ModelForm):
+class CvForm(forms.ModelForm):
     class Meta:
-        model = Curriculum
+        model = Cv
         fields = [
             'nombre',
             'correo_electronico',
@@ -32,7 +32,6 @@ class CurriculumForm(forms.ModelForm):
             'educacion',
             'habilidades',
             'idiomas',
-            'curriculum_adjunto',
         ]
 
 #class CurriculumForm(forms.Form):

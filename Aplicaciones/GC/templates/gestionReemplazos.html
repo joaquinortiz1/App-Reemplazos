@@ -9,7 +9,7 @@
         <h2>Solicitud de Trabajos</h2>
         <div class="card">
             <div class="card-body">
-                <form action="/vista_admin/registrarTrabajo/" method="POST">{% csrf_token %}
+                <form action="{% url 'registrar_trabajo' %}" method="POST">{% csrf_token %}
 
                     <div class="form-group">
                         <label for="titulo">Titulo del Trabajo:</label>
@@ -89,6 +89,7 @@
                     <tr>
                         <th>Titulo</th>
                         <th>Requisitos</th>
+                        <th colspan="2">Opciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -97,6 +98,8 @@
                         
                         <td>{{r.titulo}}</td>
                         <td>{{r.requisitos}}</td>
+                        <td><a href="edicionTrabajo/{{r.id}}" class="btn btn-info">Editar</a></td>
+                        <td><a href="eliminacionTrabajo/{{r.id}}" class="btn btn-danger">Eliminar</a></td>
                         
                     </tr>
                     {% endfor %}
