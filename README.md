@@ -1,9 +1,4 @@
 # App-Reemplazos
-# Manejo-de-curriculums
-
-**Descripción breve de tu proyecto**
-
-[Descripción más detallada opcional]
 
 ## Tecnologías Utilizadas
 
@@ -27,7 +22,7 @@ Configuración del Entorno
 Clona este repositorio:
 
 ```bash
-git clone https://github.com/tuusuario/Manejo-de-curriculums.git
+git clone https://github.com/tunombredeusuario/App-Reemplazos.git
 ```
 
 Ve al directorio del proyecto:
@@ -36,7 +31,7 @@ Ve al directorio del proyecto:
 cd tu/ruta/al/proyecto
 ```
 
-Configura y activa tu entorno virtual (se recomienda el uso de virtualenv):
+Configura y activa tu entorno virtual :
 ```bash
 python -m venv nombredetuentorno
 source venv/bin/activate
@@ -64,33 +59,6 @@ python manage.py runserver
 Abre tu navegador web y accede a http://localhost:8000 para ver la aplicación en funcionamiento.
 
 
-Contribuciones
-¡Estamos abiertos a contribuciones! Si deseas contribuir a este proyecto, sigue estos pasos:
-
-Crea un fork del repositorio en GitHub.
-
-Clona tu repositorio fork en tu máquina local.
-
-Crea una nueva rama para tu contribución:
-```bash
-git checkout -b mi-contribucion
-```
-
-Realiza tus cambios y asegúrate de que funcionen correctamente.
-
-Confirma tus cambios y envía tus cambios a tu repositorio fork en GitHub:
-```bash
-git commit -m "Descripción de tu contribución"
-git push origin mi-contribucion
-```
-
-Abre una solicitud de extracción (Pull Request) en el repositorio original.
-Autores
-Nombres: Joel Reyes y Jorge Vera
+Nombres: Joaquin Ortiz y Jean Moscoso
 
 
-Licencia
-Este proyecto está bajo la Licencia [Nombre de la Licencia] - Consulta el archivo LICENSE para obtener más detalles.
-```bash
-Asegúrate de personalizar este README.md con la información específica de tu proyecto, incluyendo su nombre, descripción y cualquier detalle adicional que consideres relevante. Además, puedes agregar tu información como autor y la licencia aplicable a tu proyecto.
-```
