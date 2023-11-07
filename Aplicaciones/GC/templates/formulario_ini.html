@@ -1,9 +1,63 @@
-<!-- En formulario_inicio_sesion.html -->
-<form method="POST">
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Iniciar Sesión</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      text-align: center;
+    }
+
+    form {
+      width: 60%;
+      max-width: 400px;
+      margin: 0 auto;
+      background-color: #fff;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    form label, form input {
+      display: block;
+      margin-bottom: 10px;
+      width: 100%;
+    }
+
+    form input[type="text"],
+    form input[type="password"] {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+    }
+
+    form input[type="submit"] {
+      background-color: #007bff;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+
+    form input[type="submit"]:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <form method="POST">
     {% csrf_token %}
     {{ form.nombre_usuario.label_tag }}
     {{ form.nombre_usuario }}
     {{ form.contrasena.label_tag }}
     {{ form.contrasena }}
     <input type="submit" value="Iniciar Sesión">
-</form>
+  </form>
+</body>
+</html>
+
