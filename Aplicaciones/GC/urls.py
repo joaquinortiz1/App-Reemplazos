@@ -15,5 +15,8 @@ urlpatterns = [
     #path('vista_usuario/curriculum_reg/confi_curri/', views.confir_curri, name='confirmacion_curri'),
     path('vista_admin/solicitudes/', views.form, name='solicitudes'),
     path('vista_admin/registrarTrabajo/', views.registrarTrabajo, name='registrar_trabajo'),
-    #path('vista_admin/registrarTrabajo/eliminacionTrabajo/<id>', views.eliminarTrabajo, name='eliminar_trabajo'),
+    path('vista_admin/solicitudes/edicionTrabajo/<id>', views.edicionTrabajo, name='editar_trabajo'),
+    path('editarTrabajo/', views.editarTrabajo, name='edit_trabajo'),
+    path('vista_admin/solicitudes/eliminacionTrabajo/<id>', views.eliminarTrabajo, name='eliminar_trabajo'),
+    path('calcular_puntaje/', views.calcular_puntaje_curriculum, name='calcular_puntaje_curriculum'),
 ]

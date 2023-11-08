@@ -1,0 +1,84 @@
+{% extends "./base.html" %}
+
+{% block title %}Solicitud de trabajos{% endblock%}
+
+{% block body %}
+<div class="row">
+    <div class="col-md-4 offset-md-4">
+        <h2>Edicion de Trabajo</h2>
+        <div class="card">
+            <div class="card-body">
+                <form action="{% url 'edit_trabajo' %}" method="POST">{% csrf_token %}
+
+                    <div class="form-group">
+                        <label for="titulo">Titulo del Trabajo:</label>
+                        <input type="text" id="txtTitulo" name="txtTitulo"  value="{{nuevo_trabajo.titulo}}" class="form-control" placeholder="Titulo" maxlength="50" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="descripcion">Descripción del Trabajo:</label>
+                        <textarea id="txtDescripcion" name="txtDescripcion" value="{{nuevo_trabajo.descripcion}}" class="form-control" placeholder="Descripción" rows="4" maxlength="500" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="requisitos">Requisitos del Trabajo:</label>
+                        <textarea id="txtRequisitos" name="txtRequisitos" value="{{nuevo_trabajo.requisitos}}" class="form-control" placeholder="Requisitos" rows="4" maxlength="500" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ubicacion">Ubicación del Trabajo:</label>
+                        <input type="text" id="txtUbicacion" name="txtUbicacion" value="{{nuevo_trabajo.ubicacion}}" class="form-control" placeholder="Ubicación" maxlength="100" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="sueldo">Sueldo:</label>
+                        <input type="number" id="txtSueldo" name="txtSueldo" value="{{nuevo_trabajo.sueldo}}" class="form-control" placeholder="Sueldo" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="tipo_trabajo">Tipo de Trabajo:</label>
+                        <select id="selTipoTrabajo" name="selTipoTrabajo" value="{{nuevo_trabajo.tipo_trabajo}}" class="form-control" required>
+                            <option value="tiempo_completo">Tiempo Completo</option>
+                            <option value="medio_tiempo">Medio Tiempo</option>
+                            <option value="freelance">Freelance</option>
+                            <option value="reemplazo">Reemplazo</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="tipo_contrato">Tipo de Contrato:</label>
+                        <select id="selTipoContrato" name="selTipoContrato" value="{{nuevo_trabajo.tipo_contrato}}" class="form-control" required>
+                            <option value="indefinido">Indefinido</option>
+                            <option value="temporal">Temporal</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="area_trabajo">Área de Trabajo:</label>
+                        <input type="text" id="txtAreaTrabajo" name="txtAreaTrabajo" value="{{nuevo_trabajo.area_trabajo}}" class="form-control" placeholder="Área de Trabajo" maxlength="100" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="fecha_publicacion">Fecha de Publicación:</label>
+                        <input type="date" id="fecha_publicacion" name="fecha_publicacion" value="{{nuevo_trabajo.fecha_publicacion}}" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="trabajo_remoto">Trabajo Remoto:</label>
+                        <input type="checkbox" id="chkTrabajoRemoto" name="chkTrabajoRemoto" value="{{nuevo_trabajo.trabajo_remoto}}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="fecha_limite">Fecha Límite para la Aplicación:</label>
+                        <input type="date" id="fecha_limite" name="fecha_limite" value="{{nuevo_trabajo.fecha_limite}}" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success btn-block text-white">Enviar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

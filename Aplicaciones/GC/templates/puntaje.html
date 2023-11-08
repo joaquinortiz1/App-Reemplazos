@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Puntaje del Currículum</title>
+</head>
+<body>
+    <div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+        <div>
+            <h2 style="text-align: center;">Puntaje del Currículum</h2>
+            <div class="card">
+                <div class="card-body">
+                    <h3>Puntaje Obtenido:</h3>
+                    <p>El puntaje de su currículum es de: {{ puntaje }}</p>
+                    <p><a href="{% url 'vista_usuario' %}">Pulse aquí para regresar a la página de usuario</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

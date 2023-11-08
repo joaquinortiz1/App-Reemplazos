@@ -4,7 +4,7 @@ from . forms import UsuarioForm, LoginForm, CvForm, CurriculumEditForm
 from django.contrib.auth import authenticate, login
 from django.db.utils import IntegrityError
 from django.http import HttpResponse 
-from .utils import calcular_puntuacion
+from django.contrib import messages
 #from django.contrib.auth.decorators import login_required, user_passes_test
 
 # Create your views here.
@@ -155,7 +155,7 @@ def registrar_curriculum(request):
 
         # Puedes redirigir a donde desees después de guardar el curriculum.
         # Por ejemplo, a una página de confirmación.
-        return redirect('vista_usuario')  # Reemplaza 'pagina_de_confirmacion' con la URL deseada
+        return redirect('calcular_puntaje_curriculum')  # Reemplaza 'pagina_de_confirmacion' con la URL deseada
 
     return render(request, 'curriculum_reg.html')  # Renderiza el formulario si el método de solicitud es GET
 
@@ -251,10 +251,94 @@ def registrarTrabajo(request):
     fecha_limite=request.POST['fecha_limite']
 
     nuevo_trabajo = SolicitudDeReemplazo.objects.create(titulo=titulo, descripcion=descripcion, requisitos=requisitos, ubicacion=ubicacion, sueldo=sueldo, tipo_de_trabajo=tipo_de_trabajo, tipo_de_contrato=tipo_de_contrato, area_de_trabajo=area_de_trabajo, fecha_de_publicacion=fecha_de_publicacion, trabajo_remoto=trabajo_remoto, fecha_limite=fecha_limite)
-    return redirect('vista_admin/registrarTrabajo/')
+    return redirect('solicitudes')
 
-def eliminarTrabajo(request, titulo):
+
+
+def edicionTrabajo(request, id):
+    nuevo_trabajo = SolicitudDeReemplazo.objects.get(id=id)
+    return render(request, "edicionTrabajo.html", {"nuevo_trabajo": nuevo_trabajo})
+
+
+def editarTrabajo(request):
+    titulo=request.POST['txtTitulo']
+    descripcion=request.POST['txtDescripcion']
+    requisitos=request.POST['txtRequisitos']
+    ubicacion=request.POST['txtUbicacion']
+    sueldo=request.POST['txtSueldo']
+    tipo_de_trabajo=request.POST['selTipoTrabajo']
+    tipo_de_contrato=request.POST['selTipoContrato']
+    area_de_trabajo=request.POST['txtAreaTrabajo']
+    fecha_de_publicacion=request.POST['fecha_publicacion']
+    #trabajo_remoto=request.POST['chkTrabajoRemoto']
+    #trabajo_remoto = request.POST.get('chkTrabajoRemoto', None)
+    trabajo_remoto = request.POST.get('chkTrabajoRemoto') == 'on'
+    fecha_limite=request.POST['fecha_limite']
+
+    nuevo_trabajo = SolicitudDeReemplazo.objects.get(id=id)
+    nuevo_trabajo.titulo = titulo
+    nuevo_trabajo.descripcion = descripcion
+    nuevo_trabajo.requisitos = requisitos
+    nuevo_trabajo.ubicacion = ubicacion
+    nuevo_trabajo.sueldo = sueldo
+    nuevo_trabajo.tipo_de_trabajo = tipo_de_trabajo
+    nuevo_trabajo.tipo_de_contrato = tipo_de_contrato
+    nuevo_trabajo.area_de_trabajo = area_de_trabajo
+    nuevo_trabajo.fecha_de_publicacion = fecha_de_publicacion
+    nuevo_trabajo.trabajo_remoto = trabajo_remoto
+    nuevo_trabajo.fecha_limite = fecha_limite
+    nuevo_trabajo.save()
+
+    return  redirect('solicitudes')
+
+def eliminarTrabajo(request, id):
     nuevo_trabajo = SolicitudDeReemplazo.objects.get(id=id)
     nuevo_trabajo.delete()
 
-    return redirect('vista_admin/registrarTrabajo/')
+    # Agrega un mensaje de éxito
+    messages.success(request, 'El trabajo ha sido eliminado exitosamente.')
+
+    # Redirige al usuario a la vista de solicitudes
+    return redirect('solicitudes')
+
+
+def calcular_puntaje_curriculum(request):
+    #request.method == 'POST':
+    # Obtiene las opciones seleccionadas del formulario
+    experiencia_laboral = request.POST.get('experiencia_laboral', 'desarrollador_frontend')
+    educacion = request.POST.get('educacion', 'basica')
+    habilidades = request.POST.get('habilidades', 'liderazgo')
+    idiomas = request.POST.get('idiomas', 'español')
+    anios_experiencia = int(request.POST.get('anios_experiencia', 0))
+
+    # Define las reglas para asignar puntajes
+    puntajes = {
+        'asistente_ejecutivo': 50,
+        'coordinador_de_proyecto': 40,
+        'gerente_seguridad': 30,
+        'desarrollador_backend': 20,
+        'desarrollador_frontend': 10,
+        'desarrollador_full_stack': 45,
+        'basica': 10,
+        'media': 20,
+        'superior': 30,
+        'programacion': 30,
+        'primeros_auxilios': 20,
+        'creatividad_e_innovación': 25,
+        'trabajo_en_equipo': 15,
+        'liderazgo': 10,
+        'español': 20,
+        'ingles': 30,
+        'español_e_ingles': 40,
+        'español_ingles_y_frances': 50,
+        'español_ingles_y_portugues': 40,
+    }
+
+    # Calcula el puntaje sumando los valores de puntaje de las opciones seleccionadas
+    puntaje = puntajes.get(experiencia_laboral, 0) + puntajes.get(educacion, 0) + puntajes.get(habilidades, 0) + puntajes.get(idiomas, 0) + anios_experiencia
+
+    # Redirige a una página que muestre el puntaje o realiza otras acciones según tus necesidades
+    return render(request, 'puntaje.html', {'puntaje': puntaje})
+
+    # Si no se envió el formulario, muestra el formulario en blanco
+    #return render(request, 'formulario_curriculum.html')
