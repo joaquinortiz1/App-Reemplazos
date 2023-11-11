@@ -6,6 +6,7 @@ urlpatterns = [
     path('formulario_reg/', views.formulario),
     path('vista_admin/', views.vista_admin, name='vista_admin'),  
     path('vista_usuario/', views.vista_usuario, name='vista_usuario'),
+    path('vista_u_pos/', views.listado_trabajos, name='vista_u_pos'),
     path('iniciar_sesion/', views.iniciar_sesion, name='iniciar_sesion'), 
     path('vista_usuario/curriculum_reg/', views.registrar_curriculum, name='registro_curriculum'), 
     #path('curriculum_edit/<int:curriculum_id>/', views.editar_curriculum, name='editar_curriculum'),
@@ -19,4 +20,5 @@ urlpatterns = [
     path('editarTrabajo/', views.editarTrabajo, name='edit_trabajo'),
     path('vista_admin/solicitudes/eliminacionTrabajo/<id>', views.eliminarTrabajo, name='eliminar_trabajo'),
     path('calcular_puntaje/', views.calcular_puntaje_curriculum, name='calcular_puntaje_curriculum'),
+    path('postular_trabajo/<id>/', views.postular_trabajo, name='postular_trabajo'),
 ]

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Postulación Exitosa</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        header {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 0;
+        }
+
+        h1 {
+            color: #007bff;
+        }
+
+        .message {
+            margin: 20px;
+        }
+
+        .btn-home {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            text-decoration: none;
+            background-color: #007bff;
+            color: #fff;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>¡Postulación Exitosa!</h1>
+    </header>
+
+    <div class="message">
+        <p>Tu postulación ha sido recibida correctamente. ¡Gracias por tu interés!</p>
+        <p>Recuerda estar atento/a a posibles actualizaciones sobre tu postulación.</p>
+        <a href="{% url 'vista_u_pos' %}" class="btn-home">Ir a la página principal</a>
+    </div>
+</body>
+</html>

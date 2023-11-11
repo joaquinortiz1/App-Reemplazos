@@ -40,6 +40,55 @@
         h1 {
             text-align: center;
         }
+
+        .listado-trabajos {
+            margin: 20px;
+        }
+
+        .listado-trabajos table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .listado-trabajos th, .listado-trabajos td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .listado-trabajos th {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .listado-trabajos .btn-postularse {
+            display: inline-block;
+            padding: 6px 12px;
+            margin: 0;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 1.42857143;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            touch-action: manipulation;
+            cursor: pointer;
+            user-select: none;
+            background-image: none;
+            border: 1px solid transparent;
+            border-radius: 4px;
+        }
+
+        .listado-trabajos .btn-success {
+            color: #fff;
+            background-color: #5cb85c;
+            border-color: #4cae4c;
+        }
+
+        .listado-trabajos .text-muted {
+            color: #888888;
+        }
     </style>
 </head>
 <body>
@@ -55,5 +104,35 @@
             <li><a href="#">Solicitudes Realizadas</a></li>
         </ul>
     </nav>
+
+    <div class="listado-trabajos">
+        <h2>Listado de Trabajos</h2>
+        <div class="table-responsive py-2">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Titulo</th>
+                        <th>Requisitos</th>
+                        <th colspan="2">Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for r in reemplazos %}
+                        <tr>
+                            <td>{{ r.titulo }}</td>
+                            <td>{{ r.requisitos }}</td>
+                            <td>
+                                {% if r.abierto %}
+                                    <a href="{% url 'postular_trabajo' r.id %}" class="btn btn-postularse btn-success">Postularse</a>
+                                {% else %}
+                                    <span class="text-muted">Postulaciones cerradas</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 </body>
 </html>

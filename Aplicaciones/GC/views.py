@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect
-from .models import SolicitudDeReemplazo, Curriculum, Cv
+from .models import SolicitudDeReemplazo, Curriculum, Cv, Postulacion, Usuario
 from . forms import UsuarioForm, LoginForm, CvForm, CurriculumEditForm
 from django.contrib.auth import authenticate, login
 from django.db.utils import IntegrityError
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from django.http import HttpResponse 
 from django.contrib import messages
 #from django.contrib.auth.decorators import login_required, user_passes_test
@@ -342,3 +344,29 @@ def calcular_puntaje_curriculum(request):
 
     # Si no se envió el formulario, muestra el formulario en blanco
     #return render(request, 'formulario_curriculum.html')
+
+#def vista_trabajos_disponibles(request):
+    #trabajos_disponibles = SolicitudDeReemplazo.objects.filter(abierto=True)
+    #return render(request, 'usuario_template.html', {'trabajos': trabajos_disponibles})
+
+def listado_trabajos(request):
+    trabajos = SolicitudDeReemplazo.objects.all()
+    return render(request, 'usuario_template.html', {'reemplazos': trabajos})
+
+@login_required
+def postular_trabajo(request, id):
+    trabajo = SolicitudDeReemplazo.objects.get(id=id)
+
+
+    if Postulacion.objects.filter(usuario=request.Usuario, solicitud_reemplazo=trabajo).exists():
+        messages.warning(request, 'Ya te has postulado a este trabajo.')
+        return redirect('nombre_de_la_vista_listado_trabajos')  # Reemplaza con el nombre real de tu vista
+    
+    if request.method == 'POST':
+        # Crea una instancia de Postulacion
+        postulacion = Postulacion(usuario=request.Usuario, solicitud_reemplazo=trabajo)
+        postulacion.save()
+
+    return render(request, 'postulacion_exitosa.html', {'trabajo': trabajo})
+
+    
