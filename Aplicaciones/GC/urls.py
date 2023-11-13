@@ -19,6 +19,6 @@ urlpatterns = [
     path('vista_admin/solicitudes/edicionTrabajo/<id>', views.edicionTrabajo, name='editar_trabajo'),
     path('editarTrabajo/', views.editarTrabajo, name='edit_trabajo'),
     path('vista_admin/solicitudes/eliminacionTrabajo/<id>', views.eliminarTrabajo, name='eliminar_trabajo'),
-    path('calcular_puntaje/', views.calcular_puntaje_curriculum, name='calcular_puntaje_curriculum'),
+    #path('calcular_puntaje/', views.calcular_puntaje_curriculum, name='calcular_puntaje_curriculum'),
     path('postular_trabajo/<id>/', views.postular_trabajo, name='postular_trabajo'),
 ]

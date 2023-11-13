@@ -4,6 +4,7 @@
 
 {% block body %}
 
+
 <div class="row">
     <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
         <h2>Solicitud de Trabajos</h2>
@@ -28,7 +29,46 @@
 
                     <div class="form-group">
                         <label for="ubicacion">Ubicación del Trabajo:</label>
-                        <input type="text" id="txtUbicacion" name="txtUbicacion" class="form-control" placeholder="Ubicación" maxlength="100" required>
+                        <select id="txtUbicacion" name="txtUbicacion" class="form-control">
+                            <option value="iquique">Iquique</option>
+                            <option value="alto_hospicio">Alto Hospicio</option>
+                            <!-- ... Otras opciones de ubicación ... -->
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="habilidades_requeridas">Habilidades Requeridas:</label>
+                        <select id="selHabilidadesRequeridas" name="selHabilidadesRequeridas" class="form-control">
+                                <option value="programacion">Programación</option>
+                                <option value="liderazgo">Liderazgo</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="experiencia_requerida">Experiencia Requerida:</label>
+                        <select id="selExperienciaRequerida" name="selExperienciaRequerida" class="form-control">
+                                <option value="asistente_ejecutivo">Asistente Ejecutivo</option>
+                                <option value="coordinador_proyecto">Coordinador de Proyecto</option>  
+                                <option value="gerente_de_seguridad">Gerente de Seguridad</option>
+                                <option value="desarrollador_backend">Desarrollador Backend</option>
+                                <option value="desarrollador_frontend">Desarrollador Frontend</option>
+                                <option value="desarrollador_full_stack">Desarrollador Full Stack</option>
+                                <option value="especialista_en_recursos_humanos">Especialista en Recursos Humanos</option>   
+                                <option value="especialista_en_ventas">Especialista en Ventas</option>
+                                <option value="especialista_en_soporte Técnico">Especialista en Soporte Técnico</option>
+                                <option value="especialista_en_logística">Especialista en Logística</option>
+                                <option value="analista_financiero">Analista Financiero</option>                 
+                        </select>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="educacion_requerida">Educación Requerida:</label>
+                        <select id="selEducacionRequerida" name="selEducacionRequerida" class="form-control">
+                            <option value="basica">Básica</option>
+                            <option value="media">Media</option>
+                            <!-- ... otras opciones de educación ... -->
+                        </select>
                     </div>
 
                     <div class="form-group">
@@ -56,7 +96,17 @@
 
                     <div class="form-group">
                         <label for="area_trabajo">Área de Trabajo:</label>
-                        <input type="text" id="txtAreaTrabajo" name="txtAreaTrabajo" class="form-control" placeholder="Área de Trabajo" maxlength="100" required>
+                        <select id="txtAreaTrabajo" name="txtAreaTrabajo" class="form-control">
+                            <option value="tecnologia">Tecnologia</option>
+                            <option value="salud">Salud</option>
+                            <option value="finanzas">Finanzas</option>
+                            <option value="educacion">Educacion</option>
+                            <option value="marketing">Marketing</option>
+                            <option value="ventas">Ventas</option>
+                            <option value="recursos_humanos">Recursos Humanos</option>
+                            <option value="ingenieria">Ingenieria</option>
+                            <!-- ... Otras opciones de área de trabajo ... -->
+                        </select>
                     </div>
 
                     <div class="form-group">
@@ -81,6 +131,7 @@
             </div>
         </div>
     </div>
+
     <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">  
         <h1>Listado de Trabajos</h1>
         <div class="table-responsive py-2">
