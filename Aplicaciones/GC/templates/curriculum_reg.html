@@ -1,6 +1,77 @@
-<div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
-    <div>
-        <h2 style="text-align: center;">Formulario de Curriculum</h2>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Curriculum</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+
+        #formulario-container {
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        .card {
+            width: 300px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div id="formulario-container">
+        <h2>Formulario de Curriculum</h2>
         <div class="card">
             <div class="card-body">
                 <form action="{% url 'registro_curriculum' %}" method="POST">
@@ -11,14 +82,23 @@
                         <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Nombre" required>
                     </div>
 
-                    <div class="form-group">
+                     <div class="form-group">
                         <label for="correo_electronico">Correo Electrónico:</label>
                         <input type="email" id="correo_electronico" name="correo_electronico" class="form-control" placeholder="Correo Electrónico" required>
                     </div>
 
                     <div class="form-group">
                         <label for="area_trabajo">Área de Trabajo:</label>
-                        <input type="text" id="area_trabajo" name="area_trabajo" class="form-control" placeholder="Área de Trabajo" required>
+                        <select id="txtAreaTrabajo" name="txtAreaTrabajo" class="form-control">
+                            <option value="tecnologia">Tecnologia</option>
+                            <option value="salud">Salud</option>
+                            <option value="finanzas">Finanzas</option>
+                            <option value="educacion">Educacion</option>
+                            <option value="marketing">Marketing</option>
+                            <option value="ventas">Ventas</option>
+                            <option value="recursos_humanos">Recursos Humanos</option>
+                            <option value="ingenieria">Ingenieria</option>
+                        </select>
                     </div>
 
                     <div class="form-group">
@@ -30,11 +110,16 @@
                         <label for="experiencia_laboral">Experiencia Laboral:</label>
                         <select id="experiencia_laboral" name="experiencia_laboral" class="form-control" required>
                             <option value="asistente_ejecutivo">Asistente Ejecutivo</option>
-                            <option value="coordinador_de_proyecto">Coordinador de Proyecto</option>
-                            <option value="gerente_seguridad">Gerente Seguridad</option>
-                            <option value="desarrollador_backend">Desarrollador backend</option>
-                            <option value="desarrollador_frontend">Desarrollador frontend</option>
-                            <option value="desarrollador_full_stack">Desarrollador full stack</option>
+                            <option value="coordinador_proyecto">Coordinador de Proyecto</option>  
+                            <option value="gerente_de_seguridad">Gerente de Seguridad</option>
+                            <option value="desarrollador_backend">Desarrollador Backend</option>
+                            <option value="desarrollador_frontend">Desarrollador Frontend</option>
+                            <option value="desarrollador_full_stack">Desarrollador Full Stack</option>
+                            <option value="especialista_en_recursos_humanos">Especialista en Recursos Humanos</option>   
+                            <option value="especialista_en_ventas">Especialista en Ventas</option>
+                            <option value="especialista_en_soporte Técnico">Especialista en Soporte Técnico</option>
+                            <option value="especialista_en_logística">Especialista en Logística</option>
+                            <option value="analista_financiero">Analista Financiero</option> 
                         </select>
                     </div>
 
@@ -81,5 +166,5 @@
             </div>
         </div>
     </div>
-</div>
-
+</body>
+</html>

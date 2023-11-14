@@ -1,4 +1,7 @@
 from django.db import models
+from django.utils import timezone
+
+
 #from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 
 
@@ -13,6 +16,8 @@ class Usuario(models.Model):
     email = models.EmailField(unique=True)
     contrasena = models.CharField(max_length=128, default='valor_predeterminado')
     rut = models.CharField(max_length=12, unique=True, default='N/A')
+    habilidades_usuario = models.CharField(max_length=50, choices=[("programacion", "programacion"), ("liderazgo", "liderazgo")], default="programacion")
+    experiencia_usuario = models.CharField(max_length=50, choices=[("asistente_ejecutivo", "asistente_ejecutivo"), ("coordinador_proyecto", "coordinador_proyecto"), ("gerente_de_seguridad", "gerente_de_seguridad"), ("desarrollador_backend", "desarrollador_backend"), ("desarrollador_frontend", "desarrollador_frontend"), ("desarrollador_full_stack", "desarrollador_full_stack"), ("especialista_en_recursos_humanos", "especialista_en_recursos_humanos"), ("especialista_en_ventas", "especialista_en_ventas"), ("especialista_en_soporte Técnico", "especialista_en_soporte Técnico"), ("especialista_en_logística", "especialista_en_logística"), ("analista_financiero", "analista_financiero")], default="asistente_ejecutivo")
     fecha_nacimiento = models.DateField(null=False, default="2000-01-01")
     ultimo_login = models.DateTimeField(auto_now=True)
     esta_activa = models.BooleanField(default=True)
@@ -87,7 +92,7 @@ class SolicitudDeReemplazo(models.Model):
 class Cv(models.Model):
     nombre = models.CharField(max_length=100)
     correo_electronico = models.EmailField(unique=True)
-    area_trabajo = models.CharField(max_length=100)
+    area_trabajo = models.CharField(max_length=50, choices=[("Tecnología", "Tecnología"), ("Salud", "Salud"), ("Finanzas", "Finanzas"), ("Educación", "Educación"), ("Marketing", "Marketing"), ("Ventas", "Ventas"), ("Recursos Humanos", "Recursos Humanos"), ("Ingeniería", "Ingeniería"), ("Arte y Diseño", "Arte y Diseño"), ("Legal", "Legal"), ("Medio Ambiente", "Medio Ambiente"), ("Investigación", "Investigación"), ("Servicios Sociales", "Servicios Sociales"), ("Otros", "Otros")])
     telefono = models.CharField(max_length=20)
     experiencia_laboral = models.CharField(max_length=30, choices=[("Asistente ejecutivo", "Asistente ejecutivo"), ("Coordinador de proyecto", "Coordinador de proyecto"), ("Gerente seguridad", "Gerente seguridad"), ("Desarrollador backend", "Desarrollador backend"), ("Desarrollador frontend", "Desarrollador frontend"), ("Desarrollador full stack", "Desarrollador full stack")])
     anios_experiencia = models.PositiveIntegerField()
@@ -97,6 +102,9 @@ class Cv(models.Model):
 
 
 class Postulacion(models.Model):
-    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
-    solicitud_reemplazo = models.ForeignKey(SolicitudDeReemplazo, on_delete=models.CASCADE)
-    puntaje = models.IntegerField(default=0)
+    curriculum = models.ForeignKey(Cv, on_delete=models.CASCADE, default=1)
+    solicitud = models.ForeignKey(SolicitudDeReemplazo, on_delete=models.CASCADE)
+    fecha_postulacion = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return f"{self.curriculum.nombre} - {self.solicitud.titulo}"

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Habilidades y Experiencia</title>
+</head>
+<body>
+    <h1>Habilidades y Experiencia</h1>
+
+    <p><strong>Curriculum:</strong> {{ curriculum.nombre }}</p>
+    <p><strong>Habilidades:</strong> {{ curriculum.habilidades }}</p>
+    <p><strong>Experiencia:</strong> {{ curriculum.experiencia_laboral }}</p>
+
+    <hr>
+
+    <p><strong>Solicitud de Reemplazo:</strong> {{ solicitud.titulo }}</p>
+    <p><strong>Habilidades Necesarias:</strong> {{ solicitud.habilidades_requeridas }}</p>
+    <p><strong>Experiencia Requerida:</strong> {{ solicitud.experiencia_requerida }}</p>
+
+    <hr>
+
+    {% if curriculum.habilidades == solicitud.habilidades_requeridas and curriculum.experiencia_laboral == solicitud.experiencia_requerida %}
+        <p style="color: green;"><strong>Segun los datos dados por el curriculum eres apto para la posición.</strong></p>
+    {% else %}
+        <p style="color: red;"><strong>Segun los datos dados por el curriculum no cumples con todos los requisitos.</strong></p>
+    {% endif %}
+</body>
+</html>

@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Listado de Postulaciones</title>
+</head>
+<body>
+    <h1>Listado de Postulaciones</h1>
+    <ul>
+        {% for postulacion in postulaciones %}
+            <li>{{ postulacion }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

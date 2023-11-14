@@ -1,4 +1,5 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
+from django.http import Http404
 from .models import SolicitudDeReemplazo, Curriculum, Cv, Postulacion, Usuario, Habilidad, Experiencia
 from . forms import UsuarioForm, LoginForm, CvForm, CurriculumEditForm
 from django.contrib.auth import authenticate, login
@@ -14,19 +15,43 @@ def home(request):
     return render(request, "index.html")
 
 
-def formulario(request):                 #registro-usuario
+def formulario(request):
     if request.method == 'POST':
-        form = UsuarioForm(request.POST)
-        if form.is_valid():
-            usuario = form.save()
-            # Redireccionar al usuario según su rol
-            if usuario.roles == 'admin':
-                return redirect('vista_admin')
-            elif usuario.roles == 'usuario':
-                return redirect('vista_usuario')
-    else:
-        form = UsuarioForm()
-    return render(request, 'formulario_reg.html', {'form': form})
+        nombre_usuario = request.POST['nombre_usuario']
+        nombre = request.POST['nombre']
+        apellidos = request.POST['apellidos']
+        email = request.POST['email']
+        contrasena = request.POST['contrasena']
+        rut = request.POST['rut']
+        habilidades_usuario = request.POST.get('habilidades_usuario', '')
+        experiencia_usuario = request.POST.get('experiencia_usuario', '')
+        fecha_nacimiento = request.POST['fecha_nacimiento']
+        ultimo_login = request.POST.get('ultimo_login', None)
+        esta_activa = request.POST.get('esta_activa', False)
+        es_personal = request.POST.get('es_personal', False)
+
+        nuevo_usuario = Usuario.objects.create(
+            nombre_usuario=nombre_usuario,
+            nombre=nombre,
+            apellidos=apellidos,
+            email=email,
+            contrasena=contrasena,
+            rut=rut,
+            habilidades_usuario=habilidades_usuario,
+            experiencia_usuario=experiencia_usuario,
+            fecha_nacimiento=fecha_nacimiento,
+            ultimo_login=ultimo_login,
+            esta_activa=esta_activa,
+            es_personal=es_personal
+        )
+
+        # Redireccionar al usuario según su rol
+        if nuevo_usuario.roles == 'admin':
+            return redirect('vista_admin')
+        elif nuevo_usuario.roles == 'usuario':
+            return redirect('registro_curriculum')
+
+    return render(request, 'formulario_reg.html')
 
 def vista_admin(request):
     # Lógica para la vista del administrador
@@ -139,12 +164,15 @@ def iniciar_sesion(request):
         #form = CvForm()
     #return render(request, 'curriculum_reg.html', {'form': form})
 
+def form_curri(request):
+    curriculumlistados = Cv.objects.all()
+    return render(request, "usuario_template.html", {"curris": curriculumlistados})
 
 def registrar_curriculum(request):
     if request.method == 'POST':
         nombre = request.POST['nombre']
         correo_electronico = request.POST['correo_electronico']
-        area_trabajo = request.POST['area_trabajo']
+        area_trabajo = request.POST['txtAreaTrabajo']
         telefono = request.POST['telefono']
         experiencia_laboral = request.POST['experiencia_laboral']
         anios_experiencia = request.POST['anios_experiencia']
@@ -157,7 +185,7 @@ def registrar_curriculum(request):
 
         # Puedes redirigir a donde desees después de guardar el curriculum.
         # Por ejemplo, a una página de confirmación.
-        return redirect('calcular_puntaje_curriculum')  # Reemplaza 'pagina_de_confirmacion' con la URL deseada
+        return redirect('vista_u_pos')  # Reemplaza 'pagina_de_confirmacion' con la URL deseada
 
     return render(request, 'curriculum_reg.html')  # Renderiza el formulario si el método de solicitud es GET
 
@@ -252,11 +280,23 @@ def registrarTrabajo(request):
     habilidades_requeridas=request.POST['selHabilidadesRequeridas']
     experiencia_requerida=request.POST['selExperienciaRequerida']
     educacion_requerida=request.POST['selEducacionRequerida']
-
+    
     nuevo_trabajo = SolicitudDeReemplazo.objects.create(titulo=titulo, descripcion=descripcion, requisitos=requisitos, ubicacion=ubicacion, sueldo=sueldo, tipo_de_trabajo=tipo_de_trabajo, tipo_de_contrato=tipo_de_contrato, area_de_trabajo=area_de_trabajo, fecha_de_publicacion=fecha_de_publicacion, trabajo_remoto=trabajo_remoto, fecha_limite=fecha_limite, habilidades_requeridas=habilidades_requeridas, experiencia_requerida=experiencia_requerida, educacion_requerida=educacion_requerida)
+    #nuevo_curriculum = get_nuevo_curriculum()  # Reemplaza esto con la lógica real.
 
+        # Asegúrate de tener un curriculum antes de crear la Postulacion
+        #if nuevo_curriculum:
+            # Crea la Postulacion con el curriculum y la solicitud
+            #postulacion = Postulacion.objects.create(
+                #curriculum=nuevo_curriculum,
+                #solicitud=nuevo_trabajo
+            #)
+    postulacion = Postulacion.objects.create( solicitud=nuevo_trabajo)
     return redirect('solicitudes')
 
+def listado_postulaciones(request):
+    postulaciones = Postulacion.objects.all()
+    return render(request, 'listado_postulaciones.html', {'postulaciones': postulaciones})
 
 
 def edicionTrabajo(request, id):
@@ -274,8 +314,6 @@ def editarTrabajo(request):
     tipo_de_contrato=request.POST['selTipoContrato']
     area_de_trabajo=request.POST['txtAreaTrabajo']
     fecha_de_publicacion=request.POST['fecha_publicacion']
-    #trabajo_remoto=request.POST['chkTrabajoRemoto']
-    #trabajo_remoto = request.POST.get('chkTrabajoRemoto', None)
     trabajo_remoto = request.POST.get('chkTrabajoRemoto') == 'on'
     fecha_limite=request.POST['fecha_limite']
     habilidades_requeridas=request.POST['selHabilidadesRequeridas']
@@ -311,6 +349,22 @@ def eliminarTrabajo(request, id):
     # Redirige al usuario a la vista de solicitudes
     return redirect('solicitudes')
 
+#def comparar_habilidades_experiencia(request, curriculum_id, solicitud_id):
+    # Obtén los objetos Curriculum y SolicitudTrabajo utilizando los IDs proporcionados
+    #curriculum = Curriculum.objects.get(pk=curriculum_id)
+    #solicitud = SolicitudDeReemplazo.objects.get(pk=solicitud_id)
+
+    # Renderiza la plantilla y pasa los datos del curriculum y la solicitud
+    #return render(request, 'comparacion_resultados.html', {'curriculum': curriculum, 'solicitud': solicitud})
+
+def comparar_habilidades_experiencia(request, curriculum_id, solicitud_id):
+    try:
+        # Intenta obtener el objeto Curriculum o devuelve un error 404 si no existe
+        curriculum = get_object_or_404(Curriculum, pk=curriculum_id)
+    except Curriculum.DoesNotExist:
+        # Si el Curriculum no existe, puedes manejarlo de alguna manera, por ejemplo, redirigir a una página de error.
+        return render(request, 'error.html', {'message': 'Curriculum not found'})
+    return render(request, 'comparacion_resultados.html')
 
 #def calcular_puntaje_curriculum(request):
     #request.method == 'POST':
@@ -359,39 +413,188 @@ def eliminarTrabajo(request, id):
     #trabajos_disponibles = SolicitudDeReemplazo.objects.filter(abierto=True)
     #return render(request, 'usuario_template.html', {'trabajos': trabajos_disponibles})
 
+
+#def comparar_habilidades_y_experiencia(request, curriculum_id, solicitud_id):
+    # Obtén las instancias de Curriculum y SolicitudDeReemplazo
+    #curriculum = Cv.objects.get(id=curriculum_id)
+    #solicitud = SolicitudDeReemplazo.objects.get(id=solicitud_id)
+
+    # Obtén las habilidades y experiencia del Curriculum y la SolicitudDeReemplazo
+    #habilidades_curriculum = set(curriculum.habilidades.split(','))
+    #experiencia_curriculum = curriculum.experiencia_laboral
+
+    #habilidades_solicitud = set(solicitud.habilidades_requeridas.split(','))
+    #experiencia_solicitud = solicitud.experiencia_requerida
+
+    # Realiza la comparación y determina si el candidato es apto
+    #apto = habilidades_curriculum.issubset(habilidades_solicitud) and experiencia_curriculum >= experiencia_solicitud
+
+    # Puedes agregar más lógica aquí según tus necesidades
+
+    # Renderiza la plantilla con los resultados
+    #return render(request, 'comparacion_resultados.html', {
+        #'curriculum': curriculum,
+        #'solicitud': solicitud,
+        #'apto': apto,
+    #})
+
+
+#def comparar_habilidades_y_experiencia(request, curriculum_id, solicitud_id):
+    # Obtener instancias del Curriculum y SolicitudDeReemplazo
+    #curriculum = Cv.objects.get(id=curriculum_id)
+    #solicitud = SolicitudDeReemplazo.objects.get(id=solicitud_id)
+
+    # Acceder a las habilidades y experiencia del Curriculum y la SolicitudDeReemplazo
+    #habilidades_curriculum = set(curriculum.habilidades.split(', '))
+    #experiencia_curriculum = curriculum.experiencia_laboral
+
+    #habilidades_solicitud = set(solicitud.habilidades_requeridas.split(', '))
+    #experiencia_solicitud = solicitud.experiencia_requerida
+
+    # Realizar la comparación de habilidades y experiencia
+    #habilidades_comunes = habilidades_curriculum.intersection(habilidades_solicitud)
+    #experiencia_comun = experiencia_curriculum == experiencia_solicitud
+
+    #print("Curriculum:", curriculum.nombre, curriculum.habilidades, curriculum.experiencia_laboral)
+    #print("Solicitud:", solicitud.titulo, solicitud.habilidades_requeridas, solicitud.experiencia_requerida)
+
+    # Puedes agregar tu lógica de comparación aquí
+    # Por ejemplo, puedes calcular un puntaje de coincidencia basado en habilidades y experiencia
+
+    # Después de la comparación, puedes pasar los resultados a tu plantilla
+    #context = {
+        #'curriculum': curriculum,
+        #'solicitud': solicitud,
+        #'habilidades_curriculum': habilidades_curriculum,
+        #'experiencia_curriculum': experiencia_curriculum,
+        #'habilidades_solicitud': habilidades_solicitud,
+        #'experiencia_solicitud': experiencia_solicitud,
+        #'habilidades_comunes': habilidades_comunes,
+        #'experiencia_comun': experiencia_comun,
+    #}
+
+    #return render(request, 'comparacion_template.html', context)
+
+
+#@login_required
+#def postular_trabajo(request, id):
+    #trabajo = SolicitudDeReemplazo.objects.get(id=id)
+
+
+    # Asumiendo que el id del usuario está disponible en la solicitud
+    #usuario_id = request.POST.get('usuario_id')  # Ajusta según tus necesidades
+
+        # Obtén el objeto Usuario correspondiente
+    #usuario = Usuario.objects.get(id=usuario_id)
+
+    # Luego, verifica si la postulación ya existe
+    #if Postulacion.objects.filter(usuario=usuario, solicitud_reemplazo=trabajo).exists():
+        # Resto de tu código aquí
+
+        #messages.warning(request, 'Ya te has postulado a este trabajo.')
+        #return redirect('nombre_de_la_vista_listado_trabajos')  # Reemplaza con el nombre real de tu vista
+    
+    #if request.method == 'POST':
+        # Crea una instancia de Postulacion
+        #postulacion = Postulacion(usuario=request.user, solicitud_reemplazo=trabajo)
+        #postulacion.save()
+
+    #return render(request, 'postulacion_exitosa.html', {'trabajo': trabajo})
+
+
+#@login_required
+#def postular_trabajo(request, id):
+    #trabajo = SolicitudDeReemplazo.objects.get(id=id)
+    #usuario_form = Usuario.objects.get(id=id)
+
+    #if request.method == 'POST':
+        # Crea una instancia de Postulacion
+        #postulacion = Postulacion(usuario=request.user, solicitud_reemplazo=trabajo)
+
+        # Calcula el puntaje
+        #puntaje = 0
+
+        # Comparación de habilidades
+        #habilidades_solicitud = set(trabajo.habilidades_requeridas.split(','))
+        #habilidades_usuario = set(usuario_form.habilidades_usuario.split(','))
+
+        #puntaje += len(habilidades_solicitud.intersection(habilidades_usuario))
+
+        # Comparación de experiencia
+        #if trabajo.experiencia_requerida == usuario_form.experiencia_usuario:
+            #puntaje += 1
+
+        #postulacion.puntaje = puntaje
+        #postulacion.save()
+
+    #return render(request, 'postulacion_exitosa.html', {'trabajo': trabajo})
 def listado_trabajos(request):
     trabajos = SolicitudDeReemplazo.objects.all()
     return render(request, 'usuario_template.html', {'reemplazos': trabajos})
 
-@login_required
-def postular_trabajo(request, id):
-    trabajo = SolicitudDeReemplazo.objects.get(id=id)
+
+def postular_trabajo(request):
+    return render(request, 'comparacion_resultados.html')
+
+def postulacion_exitosa(request):
+    return render(request, 'postulacion_exitosa.html')
+
+#@login_required
+#def postular_trabajo(request, id):
+    #trabajo = get_object_or_404(SolicitudDeReemplazo, id=id)
+
+    #try:
+        # Obtén el usuario del modelo personalizado
+        #usuario = Usuario.objects.get(id=id)
+    #except Usuario.DoesNotExist:
+        # Si no se encuentra el usuario, redirige a una página de error o a la página que desees
+        #return render(request, 'error_usuario_no_encontrado.html')  # Reemplaza 'error_usuario_no_encontrado.html' con tu plantilla de error o redirección
+
+    #if request.method == 'POST':
+        # Comparación de habilidades
+        #habilidades_solicitud = set(trabajo.habilidades_requeridas.split(','))
+        #habilidades_usuario = set(usuario.habilidades_usuario.split(','))
+
+        #puntaje_habilidades = 1 if habilidades_solicitud == habilidades_usuario else 0
+
+        # Comparación de experiencia
+        #experiencia_solicitud = trabajo.experiencia_requerida
+        #experiencia_usuario = usuario.experiencia_usuario
+
+        #puntaje_experiencia = 1 if experiencia_solicitud == experiencia_usuario else 0
+
+        # Calcula el puntaje total
+        #puntaje_total = puntaje_habilidades + puntaje_experiencia
+
+        # Crea una instancia de Postulacion y la guarda en la base de datos
+        #postulacion = Postulacion.objects.create(
+            #usuario=usuario,
+            #solicitud_reemplazo=trabajo,
+            #puntaje=puntaje_total
+        #)
+
+    #return render(request, 'postulacion_exitosa.html', {'trabajo': trabajo})
+
+#def lista_postulantes(request, id):
+    #trabajo = SolicitudDeReemplazo.objects.get(id=id)
+    #postulantes = Postulacion.objects.filter(solicitud_reemplazo=trabajo).order_by('-puntaje')
+
+    #return render(request, 'lista_postulantes.html', {'trabajo': trabajo, 'postulantes': postulantes})
 
 
-    #if Postulacion.objects.filter(usuario=request.user, solicitud_reemplazo=trabajo).exists():
-        #messages.warning(request, 'Ya te has postulado a este trabajo.')
-        #return redirect('nombre_de_la_vista_listado_trabajos')  # Reemplaza con el nombre real de tu vista
-    
-    if request.method == 'POST':
-        # Crea una instancia de Postulacion
-        postulacion = Postulacion(usuario=request.user, solicitud_reemplazo=trabajo)
-        postulacion.save()
+#def lista(request, id):
+    #solicitud = SolicitudDeReemplazo.objects.get(id=id)
+    #postulaciones = Postulacion.objects.filter(solicitud=solicitud)
 
-    return render(request, 'postulacion_exitosa.html', {'trabajo': trabajo})
+    #trabajadores = []
+    #for postulacion in postulaciones:
+        #cv = Cv.objects.get(user=postulacion.worker)
+        #puntuacion = calcular_puntaje_curriculum(cv, solicitud)
+        #trabajadores.append({'cv': cv, 'puntuacion': puntuacion})
 
-def lista(request, id):
-    solicitud = SolicitudDeReemplazo.objects.get(id=id)
-    postulaciones = Postulacion.objects.filter(solicitud=solicitud)
+    #trabajadores_ordenados = sorted(trabajadores, key=lambda x: x['puntuacion'], reverse=True)
 
-    trabajadores = []
-    for postulacion in postulaciones:
-        cv = Cv.objects.get(user=postulacion.worker)
-        puntuacion = calcular_puntaje_curriculum(cv, solicitud)
-        trabajadores.append({'cv': cv, 'puntuacion': puntuacion})
-
-    trabajadores_ordenados = sorted(trabajadores, key=lambda x: x['puntuacion'], reverse=True)
-
-    return render(request, 'tu_app/listar_trabajadores.html', {'trabajadores': trabajadores_ordenados})
+    #return render(request, 'tu_app/listar_trabajadores.html', {'trabajadores': trabajadores_ordenados})
 #lista sin metodo de puntuacion desarrollado.
 
 
@@ -406,8 +609,8 @@ def lista(request, id):
 
 
 #def tu_vista(request):#
-    habilidades = Habilidad.objects.all()  # Obtén todas las habilidades desde la base de datos
-    return render(request, 'gestionReemplazos.html', {'habilidades': habilidades})
+    #habilidades = Habilidad.objects.all()  # Obtén todas las habilidades desde la base de datos
+    #return render(request, 'gestionReemplazos.html', {'habilidades': habilidades})
 
 #def tu_vista(request):
     

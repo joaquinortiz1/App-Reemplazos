@@ -62,7 +62,7 @@
     <label for="nombre_usuario">Nombre de usuario:</label>
     <input type="text" name="nombre_usuario" required>
   
-    <label for="nombre">Nombre:</label>
+    <label for="nombre">Nombres:</label>
     <input type="text" name="nombre" required>
   
     <label for="apellidos">Apellidos:</label>
@@ -79,8 +79,8 @@
 
     <label for="contrasena">Contraseña:</label>
     <input type="password" name="contrasena" required>
+    
     <label for="roles">Rol:</label>
-
     <select name="roles" required>
       <option value="usuario">Usuario normal</option>
       <option value="admin">Administrador</option>
@@ -88,5 +88,20 @@
   
     <input type="submit" value="Enviar">
   </form>
+
+  <script>
+    function validarFechaNacimiento() {
+      var fechaNacimiento = new Date(document.getElementById('fecha_nacimiento').value);
+      var edad = new Date(new Date() - fechaNacimiento).getFullYear() - 1970;
+
+      if (edad < 18) {
+        document.getElementById('fechaError').innerText = 'Debes ser mayor de 18 años.';
+        return false;
+      } else {
+        document.getElementById('fechaError').innerText = '';
+        return true;
+      }
+    }
+  </script>
 </body>
 </html>
